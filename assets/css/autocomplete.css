@@ -5,3 +5,12 @@
 .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+.search-result-list>li:hover{
+  background-color: #0aa89e;
+  color: #fff;
+}
+.search-result-list>li{
+  cursor: pointer;
+  transition: background-color 0.2s ease-in, color 0.3s ease-out;
+}
