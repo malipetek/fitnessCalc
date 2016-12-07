@@ -56,7 +56,7 @@ var ConsumptionForm = (function(container, options) {
     $what.autocomplete({
       lookup: function(query, done) {
         $.ajax({
-          url: 'http://api.nal.usda.gov/ndb/search/?format=json&sort=n&max=25&offset=0&api_key=omcaFN9P4v5xb3l2VM7EqPyxwWRPjkg31EivJ4Jb',
+          url: 'https://api.nal.usda.gov/ndb/search/?format=json&sort=n&max=25&offset=0&api_key=omcaFN9P4v5xb3l2VM7EqPyxwWRPjkg31EivJ4Jb',
           type: 'GET',
           data: {
             q: query
