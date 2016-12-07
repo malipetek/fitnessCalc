@@ -117,7 +117,23 @@ var ConsumptionForm = (function(container, options) {
   $(document).on('click', '.search-result-list > li', function() {
     $val = $(this).text();
     $dbid = $(this).attr('data-food-db-no');
-    console.log("value: " + $val + " id: " + $dbid);
+
+    $.ajax({
+      url: 'https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=omcaFN9P4v5xb3l2VM7EqPyxwWRPjkg31EivJ4Jb&nutrients=205&nutrients=204&nutrients=208&nutrients=269',
+      type: 'GET',
+      data: {
+        dbno: $dbid
+      },
+      success: function(res) {
+        $measure = res.report.foods[0].measure;
+        $weight = res.report.foods[0].weight;
+        $nutrientsArray = res.report.foods[0].nutrients;
+        $.each($nutrientsArray, function(index, value) {
+          $nutrientName = $value.nutrient;
+
+        });
+      }
+    });
   });
 
 
@@ -166,7 +182,8 @@ var ConsumptionForm = (function(container, options) {
         "onSuccess": function(entry) {
           hideLoader();
           reset();
-          toastr.success("consumption has been added successfully. ",
+          toastr.success(
+            "consumption has been added successfully. ",
             "success");
           if (options["onConsumptionSaved"])
             options["onConsumptionSaved"](entry)
