@@ -115,6 +115,7 @@ var ConsumptionForm = (function(container, options) {
 
 
   $(document).on('click', '.search-result-list > li', function() {
+    $element = $(this);
     $val = $(this).text();
     $dbid = $(this).attr('data-food-db-no');
 
@@ -122,16 +123,31 @@ var ConsumptionForm = (function(container, options) {
       url: 'https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=omcaFN9P4v5xb3l2VM7EqPyxwWRPjkg31EivJ4Jb&nutrients=205&nutrients=204&nutrients=208&nutrients=269',
       type: 'GET',
       data: {
-        dbno: $dbid
+        ndbno: $dbid
       },
       success: function(res) {
+        var divToExpand = document.createElement('div');
+        $(divToExpand).css('display', 'none').css(
+          'background-color', '#f3f3f3').css('padding',
+          '5px 20px').css('color', '#313534');
+        var inputAmount = document.createElement('input');
         $measure = res.report.foods[0].measure;
         $weight = res.report.foods[0].weight;
         $nutrientsArray = res.report.foods[0].nutrients;
+        $(divToExpand).html("<h5> Nutrients <h5>");
         $.each($nutrientsArray, function(index, value) {
-          $nutrientName = $value.nutrient;
-
+          $nutrientName = value.nutrient;
+          $unit = value.unit;
+          $perGram = (value.gm / 100);
+          $valuePerMeasure = value.value;
+          $(divToExpand).html(function(index, html) {
+            return html + $nutrientName + " : " +
+              $valuePerMeasure + $unit + "/per " +
+              $measure + "<br/>";
+          });
         });
+        $element.append($(divToExpand));
+        $(divToExpand).slideDown();
       }
     });
   });
